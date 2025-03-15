@@ -374,6 +374,57 @@ Simpan file dengan menekan **CTRL + X**, lalu tekan **Y** dan **Enter** untuk me
 ``` chmod +x pokemon_analysis.sh ``` dan jalankan script dengan command ``` ./pokemon_analysis.sh ```.
 Kode di atas akan mengecek apakah file 'pokemon_usage.csv' ada. Jika file tidak ditemukan, maka akan muncul pesan error dan eksekusi script akan dihentikan. 
 
+Output jika script siap:
+![scriptready](pictures/script_bener.png)
+
+### 4a. Menampilkan nama Pokemon dengan Usage% dan RawUsage paling tinggi
+```
+if [ "$2" = "--info" ]; then
+        if [ ! -s "$data_file" ]; then
+                echo "Error: $data_file does not contain valid data"
+                echo " Use -h or --help for more information."
+                exit 1
+        fi
+
+        echo "Meta Report: Gen 9 OverUsed"
+
+        highest_usage=$(tail -n +2 "$data_file" | sort -t, -k2 -nr | head -n 1 | cut -d, -f1,2)
+        highest_raw=$(tail -n +2 "$data_file" | sort -t, -k3 -nr | head -n 1 | cut -d, -f1,3)
+
+        usage_pokemon=$(echo "$highest_usage" | cut -d, -f1)
+        usage_value=$(echo "$highest_usage" | cut -d, -f2)
+
+        raw_pokemon=$(echo "$highest_raw" | cut -d, -f1)
+        raw_value=$(echo "$highest_raw" | cut -d, -f2)
+
+        echo "Scariest Opponent: $usage_pokemon is terrorizing the meta at $usage_value usage!"
+        echo "Most Picked Pokemon: $raw_pokemon with a crazy $raw_value uses!"
+        echo "Time to build a GOAT-strategy!"
+
+        exit 0
+fi
+```
+``` if [ "$2" = "--info" ] ``` Mengecek apakah argumen kedua dalam command yang diberikan adalah '--info'. 
+``` if [ ! -s "$data_file" ] ``` Mengecek apakah file berisi data atau kosong, jika file kosong maka akan muncul pesan error dan petunjuk untuk membuka help.
+
+``` highest_usage=$(tail -n +2 "$data_file" | sort -t, -k2 -nr | head -n 1 | cut -d, -f1,2) ``` Mengurutkan Usage Pokemon dari yang paling besar. 
+
+``` tail -n +2 "$data_file" ``` Melewati baris pertama pada file pokemon_usage.sh dan mulai membaca file dari baris kedua.
+
+``` sort -t, -k2 -nr ``` Mengurutkan ```-k2``` kolom kedua (usage) dari yang terbesar, ```-t,``` menunjukkan delimiter atau pemisah kolom adalah **,**. ```-n``` menganggap yang disorting adalah angka, ```-r``` untuk mengurutkan dari terbesar ke terkecil. 
+
+Setelah diurutkan, ```head -n 1``` mengambil data paling atas, kemudian ```cut -d, -f1,2``` mengambil hanya nama pokemon (kolom 1) dan angka usage (kolom 2).
+
+``` highest_raw=$(tail -n +2 "$data_file" | sort -t, -k3 -nr | head -n 1 | cut -d, -f1,3)``` Mengurutkan Raw Pokemon dari yang paling besar, untuk keseluruhan kode sama hanya diganti untuk nomor kolom menjadi ```-k3``` karena Raw berada di kolom 3. 
+
+``` usage_pokemon=$(echo "$highest_usage" | cut -d, -f1)``` ```usage_value=$(echo "$highest_usage" | cut -d, -f2)``` Memisahkan data Pokemon dan angkanya. 
+```cut -d, -f1``` Mengambil kolom 1 yang berisi nama Pokemon dari sorting 'highest_usage'.
+```cut -d, -f2``` Mengambil kolom 2 yang berisi angka Usage dari sorting 'highest_usage'. Kode sama untuk Raw Pokemon yang diambil dari sorting 'raw_usage'.
+
+Output untuk 4a:
+![output4ainfo](pictures/terminal_info.png)
+
+
  
 
 
