@@ -60,8 +60,6 @@ if [ "$2" = "--info" ]; then
 		exit 1
 	fi
 
-        echo "Meta Report: Gen 9 OverUsed"
-
         highest_usage=$(tail -n +2 "$data_file" | sort -t, -k2 -nr | head -n 1 | cut -d, -f1,2)
 	highest_raw=$(tail -n +2 "$data_file" | sort -t, -k3 -nr | head -n 1 | cut -d, -f1,3)
 
@@ -71,6 +69,7 @@ if [ "$2" = "--info" ]; then
         raw_pokemon=$(echo "$highest_raw" | cut -d, -f1)
         raw_value=$(echo "$highest_raw" | cut -d, -f2)
 
+ 	echo "Meta Report: Gen 9 OverUsed"
         echo "Scariest Opponent: $usage_pokemon is terrorizing the meta at $usage_value usage!"
 	echo "Most Picked Pokemon: $raw_pokemon with a crazy $raw_value uses!"
 	echo "Time to build a GOAT-strategy!"
@@ -81,7 +80,6 @@ fi
 # error handling
 if [ $# -lt 3 ]; then
 	echo "Error: no $2 option provided."
-	echo "Usage: $0 <file_name> $2 <method>"
 	echo "Use -h or --help for more information."
 	exit 1
 fi
@@ -110,7 +108,7 @@ if [ "$option" = "--grep" ] || [ "$option" = "--filter" ]; then
                 exit 1
         fi
 
-        echo "Pokemon,Usage%,RawUsage,Type1,Type2,HP,Atk,Def,SpAtk,SpDef,Speed"
+        head -n 1 "$file"
         tail -n +2 "$file" | grep -i -w "$value" | sort -t, -k2 -n -r
         exit 0
 fi
