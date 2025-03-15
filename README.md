@@ -498,12 +498,12 @@ fi
 
 ```if [ -z "${COLUMNS[$value]}" ]``` Mengecek apakah input dari user valid atau tidak saat memilih kolom. Jika kolom tidak ada, akan muncul pesan error.
 
-```head -n 1 "$file"``` Menampilkan baris 1/header dari file pokemon_usage.csv.
+```head -n 1 "$file"``` Menampilkan baris 1 dari file pokemon_usage.csv.
 
 ```if [ "$value" == "name" ]``` Mengecek apakah kolom yang akan disorting adalah kolom **name**. 
 ```tail -n +2 "$file"``` Melewati baris 1 dan mulai dari baris 2. 
 ```sort -t, -k${COLUMNS[$value]}``` Mengurutkan kolom name karena input yang dimasukkan adalah name.
-```sort -t, -k${COLUMNS[$value]} -n -r``` Mengurutkan data secara numerik secara descending. 
+```sort -t, -k${COLUMNS[$value]} -n -r``` Mengurutkan data secara numerik dan descending. 
 
 ### Output untuk --sort <method>
 ![sort term bener](https://github.com/user-attachments/assets/56bc0192-22e3-471b-a383-86b9901b648c)
