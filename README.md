@@ -122,7 +122,6 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
 
 ![hasil4](https://github.com/user-attachments/assets/4cc96db1-00dd-4f12-aa5b-67c2beb475cb)
 
-
 # soal no 2
 
 ### Kerangka Nomor 2
@@ -227,6 +226,9 @@ then
     ./scripts/manager.sh
 ```
 Jika user mengisi email dan password yang sesuai dengan database (`./data/player.csv`), maka user akan dibawa ke `./scripts/manager.sh` <br>
+Berikut adalah tampilan database ketika dibuka <br>
+![db](https://github.com/user-attachments/assets/be70323d-4b50-4fca-8b64-f39118bd4868)
+
 
 ### 1.2 Core_monitor.sh
 ```
