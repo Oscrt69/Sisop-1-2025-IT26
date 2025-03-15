@@ -458,7 +458,143 @@ Setelah diurutkan, ```head -n 1``` mengambil data paling atas, kemudian ```cut -
 ```cut -d, -f2``` Mengambil kolom 2 yang berisi angka Usage dari sorting 'highest_usage'. Kode sama untuk Raw Pokemon yang diambil dari sorting 'raw_usage'.
 
 ### Output untuk --info
-![terminal_info](https://github.com/user-attachments/assets/547f0a54-8084-4ad2-ac4a-9de6b36208d3)
+![terminal_info](https://github.com/user-attachments/assets/547f0a54-8084-4ad2-ac4a-9de6b36208d3) 
+
+### 4b. Mengurutkan Pokemon berdasarkan data kolom
+```
+file="$1"
+option="$2"
+value="$3"
+
+declare -A COLUMNS=(
+        ["name"]=1
+        ["usage"]=2
+        ["raw"]=3
+        ["hp"]=6
+        ["atk"]=7
+        ["def"]=8
+        ["spatk"]=9
+        ["spdef"]=10
+        ["speed"]=11
+)
+if [ -z "${COLUMNS[$value]}" ]; then
+        echo "Error: Invalid sort method '$value'."
+        echo "Use -h or --help for more information."
+        exit 1
+fi
+
+head -n 1 "$file"
+
+if [ "$value" == "name" ]; then
+        tail -n +2 "$file" | sort -t, -k${COLUMNS[$value]}
+else
+        tail -n +2 "$file" | sort -t, -k${COLUMNS[$value]} -n -r
+        exit 0
+fi
+```
+```file="$1"``` Mendeklarasi argumen 1 adalah nama file. ```option="$2"``` Mendeklarasi argumen 2 untuk pilihan eksekusi. ```value="$3"``` Mendeklarasi argumen 3 adalah nilai dari option. 
+
+```declare -A COLUMNS``` Mendeklarasikan array asosiatif yang digunakan untuk menyimpan indeks kolom file pokemon_usage.csv. 
+
+```if [ -z "${COLUMNS[$value]}" ]``` Mengecek apakah input dari user valid atau tidak saat memilih kolom. Jika kolom tidak ada, akan muncul pesan error.
+
+```head -n 1 "$file"``` Menampilkan baris 1/header dari file pokemon_usage.csv.
+
+```if [ "$value" == "name" ]``` Mengecek apakah kolom yang akan disorting adalah kolom **name**. 
+```tail -n +2 "$file"``` Melewati baris 1 dan mulai dari baris 2. 
+```sort -t, -k${COLUMNS[$value]}``` Mengurutkan kolom name karena input yang dimasukkan adalah name.
+```sort -t, -k${COLUMNS[$value]} -n -r``` Mengurutkan data secara numerik secara descending. 
+
+### Output untuk --sort <method>
+![sort term bener](https://github.com/user-attachments/assets/56bc0192-22e3-471b-a383-86b9901b648c)
+![sort nama](https://github.com/user-attachments/assets/8c03f5d4-0686-4f54-9ceb-fb19666b2e8c)
+
+### 4c. Mencari nama pokemon tertentu
+```
+if [ "$option" = "--grep" ] || [ "$option" = "--filter" ]; then
+        if [ -z "$value" ]; then
+                echo "Error: no search keyword provided."
+                echo "Use -h or --help for more information."
+                exit 1
+        fi
+
+        head -n 1 "$file"
+        tail -n +2 "$file" | grep -i -w "$value" | sort -t, -k2 -n -r
+        exit 0
+fi
+```
+```if [ "$option" = "--grep" ]``` Mengecek apakah input argumen option adalah **--grep**.
+```if [ -z "$value" ]``` Mengecek apakah variabel kosong, jika kosong maka ``if`` bernilai **true** dan menampilkan pesan error.
+```head -n 1 "$file"``` Menampilkan baris 1 file pokemon_usage.csv.
+```grep -i -w "$value"``` Mencari variabel ```$value``` dalam file dengan ``-i`` ignore case dan ```-w``` yang hanya mencocokkan kata utuh, bukan bagian kata lain.
+```sort -t, -k2 -n -r``` Mengurutkan kolom 2 secara numerik dan descending.
+
+### Output untuk --grep <name>
+![grep term bener](https://github.com/user-attachments/assets/f8d75374-e8db-4e70-bddf-402adf712e52)
+
+### 4d. Mencari Pokemon berdasarkan filter nama type
+Kode untuk filter sama dengan kode grep di atas. 
+### Output untuk --filter <type>
+![filter term bener](https://github.com/user-attachments/assets/92670edc-29e1-4b8b-81ce-d86e785ee36b)
+
+### 4e. Error Handling 
+```
+if [ $# -lt 3 ]; then
+        echo "Error: no $2 option provided."
+        echo "Use -h or --help for more information."
+        exit 1
+fi
+```
+```if [ $# -lt 3 ]``` Mengecek apakah input argumen kurang dari 3, jika kurang dari 3 maka akan muncul pesan error dan petunjuk untuk menggunakan help.
+### Output jika input tidak sesuai
+![eror handling](https://github.com/user-attachments/assets/356c85c5-713b-48e1-8aff-48cdaa1d8d9c)
+
+### 4f. Help Screen 
+```
+if [ "$2" = "-h" ] || [ "$2" = "--help" ]; then
+echo "                         *******************  "
+echo "                      ************************* "
+echo "                    ***************************** "
+echo "                  ********************************* "
+echo "                 ************************************ "
+echo "               **************############************** "
+echo "             ***************#            #*************** "
+echo "             **************#    ######    #************** "
+echo "             ##############    #      #    ############## "
+echo "             #############    #        #    ############# "
+echo "             ##############    #      #    ############## "
+echo "             **************#    ######    #************** "
+echo "             ***************#            #*************** "
+echo "               **************############************** "
+echo "                 ************************************ "
+echo "                  ********************************** "
+echo "                    ******************************  "
+echo "                      ************************** "
+echo "                        ********************* "
+
+echo ""
+echo "Usage: ./pokemon_analysis.sh <file_name> [options]"
+echo ""
+echo "Options:"
+echo " -h, --help           Show this help message."
+echo " -i, --info           Show the highest adjusted and raw usage."
+echo " -s, --sort <method>  Sort data by a specific column."
+echo "     name             Sort by Pokemon name."
+echo "     usage            Sort by Adjusted Usage."
+echo "     raw              Sort by Raw Usage."
+echo "     hp               Sort by HP."
+echo "     atk              Sort by Attack."
+echo "     def              Sort by Defense."
+echo "     spatk            Sort by Special Attack."
+echo "     spdef            Sort by Special Defense."
+echo "     speed            Sort by Speed."
+echo " -g, --grep <name>    Search for a specific Pokemon sorted by usage."
+echo " -f, --filter <type>  Filter by type of Pokemon sorted by usage."
+
+fi
+```
+```if [ "$2" = "-h" ] || [ "$2" = "--help" ]``` Mengecek apakah input argumen kedua adalah ```-h``` atau ```--help```. Jika iya, maka akan menampilakan help screen yang sudah dibuat. 
+
 
 
 
