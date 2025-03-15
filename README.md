@@ -126,5 +126,14 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
 # soal no 2
 
 # soal no 3
+### 3.1 speak_to_me() {
+    echo "Playing: Speak to Me 🎵"
+    while true; do
+        affirmation=$(curl -s https://www.affirmations.dev | awk -F'"' '{print $4}')
+        echo "$affirmation"
+        sleep 1
+    done
+}
+
 
 # soal no 4
