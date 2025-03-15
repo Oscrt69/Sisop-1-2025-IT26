@@ -72,7 +72,7 @@ fi
 Secara keseluruhan, kode ini menggunakan if-else sesuai peraturan yang diberikan.
 ### 1a
 `sumbook=$(awk -F',' '$2 == "Chris Hemsworth" {count++} END {print count}' reading_data.csv)` <br>
-Pada line ini, `awk -F',' '$2` menunjukkan jika dari file csv tersebut akan dicari di kolom 2 yaitu penyanyi dengan tiap tabelnya terpisah oleh koma yang kalimatnya terdapat kata "Christ Hemworth", dan
+Menunjukkan bahwa dari file csv tersebut akan dicari di kolom 2 yaitu nama penyanyi yang setiap tabelnya terpisah oleh koma, dan
 `{count++}` akan menambahkan count setiap kali ditemukan nama "Chris Hemsworth" pada kolom ke-2.
 ### Output 1a.
 ![hasil](https://github.com/user-attachments/assets/2ed0e40f-2ef7-46f4-aa99-607fc08a6076)
@@ -92,11 +92,35 @@ Simpan rating tertinggi di kolom ke-7. <br>
 Simpan nama pembaca di kolom ke-2. <br>
 Simpan nama buku yang dibaca di kolom ke-3. <br>
 Simpan rating tertinggi di kolom ke-7. <br>
+
 `END {print name " - " book " - " rating}'` <br>
 Akan mengeprint dengan format nama pembaca - judul buku yang dibaca - rating
 
-### Output 1b.
+### Output 1c.
 ![hasil3](https://github.com/user-attachments/assets/58cd98de-64d9-4f25-a3b8-eae3936c3336)
+
+### 1d
+
+`if [[ "$date" > "2023-12-31" ]]
+    then
+        genre_count[$genre]=$((${genre_count[$genre]:-0} + 1))
+    fi`
+
+Operasi berjalan jika pada kolom Read_Date lebih dari 31 Desember 2023. <br>
+
+`(${genre_count[$genre]:-0} + 1))`
+Jika genre_count[$genre] belum ada, maka dianggap bernilai nol (0) untuk menghindari error. <br>
+
+`for i  in "${!genre_count[@]}"; do` 
+Mengambil semua key (nama genre) dalam array asosiatif genre_count. Loop ini akan mengecek semua genre yang ada. <br>
+
+`if (( genre_count[$i] > num ))
+    num=${genre_count[$i]}`
+Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yang sudah ditemukan sejauh ini. Jika genre saat ini memiliki jumlah yang lebih besar, maka num diperbarui dengan jumlah buku dari genre tersebut.
+
+### Output 1d
+
+![hasil4](https://github.com/user-attachments/assets/4cc96db1-00dd-4f12-aa5b-67c2beb475cb)
 
 
 # soal no 2
