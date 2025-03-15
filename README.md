@@ -594,7 +594,8 @@ echo " -f, --filter <type>  Filter by type of Pokemon sorted by usage."
 fi
 ```
 ```if [ "$2" = "-h" ] || [ "$2" = "--help" ]``` Mengecek apakah input argumen kedua adalah ```-h``` atau ```--help```. Jika iya, maka akan menampilakan help screen yang sudah dibuat. 
-
+### Output helpscreen
+![help term bener](https://github.com/user-attachments/assets/a49b8eef-7162-4da4-9e42-61a83eda122d)
 
 
 
