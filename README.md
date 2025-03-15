@@ -505,7 +505,7 @@ fi
 ```sort -t, -k${COLUMNS[$value]}``` Mengurutkan kolom name karena input yang dimasukkan adalah name.
 ```sort -t, -k${COLUMNS[$value]} -n -r``` Mengurutkan data secara numerik dan descending. 
 
-### Output untuk --sort <method>
+### Output untuk --sort (method)
 ![sort term bener](https://github.com/user-attachments/assets/56bc0192-22e3-471b-a383-86b9901b648c)
 ![sort nama](https://github.com/user-attachments/assets/8c03f5d4-0686-4f54-9ceb-fb19666b2e8c)
 
@@ -529,12 +529,12 @@ fi
 ```grep -i -w "$value"``` Mencari variabel ```$value``` dalam file dengan ``-i`` ignore case dan ```-w``` yang hanya mencocokkan kata utuh, bukan bagian kata lain.
 ```sort -t, -k2 -n -r``` Mengurutkan kolom 2 secara numerik dan descending.
 
-### Output untuk --grep <name>
+### Output untuk --grep (name)
 ![grep term bener](https://github.com/user-attachments/assets/f8d75374-e8db-4e70-bddf-402adf712e52)
 
 ### 4d. Mencari Pokemon berdasarkan filter nama type
 Kode untuk filter sama dengan kode grep di atas. 
-### Output untuk --filter <type>
+### Output untuk --filter (type)
 ![filter term bener](https://github.com/user-attachments/assets/92670edc-29e1-4b8b-81ce-d86e785ee36b)
 
 ### 4e. Error Handling 
