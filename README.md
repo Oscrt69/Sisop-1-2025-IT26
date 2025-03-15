@@ -413,8 +413,33 @@ brain_damage() {
 
 ### Output Brain Damage
 ![image](https://github.com/user-attachments/assets/4f94d8c6-417c-4d42-9f37-7181472c3c34)
+
+### 3.5 Money
 ```
+money() {
+    echo "Playing: Money 💰"
+    symbols=("¥" "€" "$" "£" "₹" "₿" "₩" "¢" "₣")
+    cols=$(tput cols)
+    lines=$(tput lines)
+    tput civis  
+
+    trap "tput cnorm; exit" SIGINT SIGTERM
+
+    while true; do
+        row=$((RANDOM % lines))
+        col=$((RANDOM % cols))
+        symbol=${symbols[RANDOM % ${#symbols[@]}]}
+	color=$((31 + RANDOM % 7))
+        tput cup "$row" "$col"
+        echo -ne "\033[${color}m$symbol\033[0m"
+        sleep 0.05
+    done
+}
 ```
+`symbols=("¥" "€" "$" "£" "₹" "₿" "₩" "¢" "₣")` merupakan array yang berisi simbol mata uanh yang nantinya akan ditampilkan secara acak. `tput civis` digunakan untuk menyembunyikan kursor agar terlihat lebih realistik. Selanjutnya `trap "tput cnorm; exit" SIGINT SIGTERM` akan menghentikan proses jika menekan ctrl + C, dimana kursor dikembalikan ke keadaan `tput cnorm` sebelum keluar. Di perintah `while true; do` command akan terus menampilkan simbol di random line dan collum. Pada command `symbol=${symbols[RANDOM % ${#symbols[@]}]}` berfungsi untuk memilih simbol acak di array symbols. Dan `color=$((31 + RANDOM % 7))` akan mencetak simbol dengan posisi 7 warna yang acak. Serta `tput cup "$row" "$col"` akan memunculkan kursor di posisi yang acak. Dan terakhir `sleep 0,05` memberikan delay sebelum mencetak simbol.
+
+### Ouput Money
+![image](https://github.com/user-attachments/assets/6251ea51-4eb5-4d0a-9d9e-643d03f8ac65)
 
 # soal no 4
 ### 4.1 Download file csv
