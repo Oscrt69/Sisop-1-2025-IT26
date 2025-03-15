@@ -375,7 +375,7 @@ Simpan file dengan menekan **CTRL + X**, lalu tekan **Y** dan **Enter** untuk me
 Kode di atas akan mengecek apakah file 'pokemon_usage.csv' ada. Jika file tidak ditemukan, maka akan muncul pesan error dan eksekusi script akan dihentikan. 
 
 Output jika script siap:
-![scriptready](pictures/script_bener.png)
+![scriptready](pictures/script_bener.PNG)
 
 ### 4a. Menampilkan nama Pokemon dengan Usage% dan RawUsage paling tinggi
 ```
@@ -422,7 +422,7 @@ Setelah diurutkan, ```head -n 1``` mengambil data paling atas, kemudian ```cut -
 ```cut -d, -f2``` Mengambil kolom 2 yang berisi angka Usage dari sorting 'highest_usage'. Kode sama untuk Raw Pokemon yang diambil dari sorting 'raw_usage'.
 
 Output untuk 4a:
-![output4ainfo](pictures/terminal_info.png)
+![output4ainfo](pictures/terminal_info.PNG)
 
 
  
