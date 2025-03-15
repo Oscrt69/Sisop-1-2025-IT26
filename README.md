@@ -125,7 +125,7 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
 
 # soal no 2
 
-### Kerangka
+### Kerangka Nomor 2
 ![krgkg](https://github.com/user-attachments/assets/3da30948-9d44-4194-a670-b9d27858d036)
 
 
