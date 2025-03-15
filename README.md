@@ -126,9 +126,10 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
 # soal no 2
 
 ### Kerangka Nomor 2
-![krgkg](https://github.com/user-attachments/assets/3da30948-9d44-4194-a670-b9d27858d036)
+![krgkg](https://github.com/user-attachments/assets/3da30948-9d44-4194-a670-b9d27858d036) <br>
+Ini adalah strktur file dan directory untuk nomor 2 sesuai dengan aturan yang ada. Tulisan berwarna biru menandakan direktori, tulisan berwarna putih menandakan file yang belum diubah permissionnya, tulisan berwarna hijau menandakan file yang sudah diubah permissionnya dengan cara `chmod +x (nama_file).sh`
 
-### 1a Membuat register.sh dan login.sh
+### 1.1 Membuat register.sh dan login.sh
 Membuat register.sh 
 
 ```validate_email() {
@@ -211,22 +212,55 @@ else
     echo "Email atau password salah."
     exit 1
 fi
+```
 
-```
-    echo -n "$1SALT" | sha256sum | awk '{print $1}'
-```
-password di hash dengan algoritma SHA 256
-`$1` merupakan parameter pertama yang dikirim ke fungsi hash().
+    `echo -n "$1SALT" | sha256sum | awk '{print $1}'
+
+Password di hash dengan algoritma SHA 256 <br>
+`$1` merupakan parameter pertama yang dikirim ke fungsi hash(). <br>
 `SALT` adalah String tambahan (garam) yang digabungkan dengan input untuk meningkatkan keamanan hash. <br>
 
-`if awk -F',' -v e="$email" -v p="$password" '$1 == e && $3 == p' ./data/player.csv
+```
+if awk -F',' -v e="$email" -v p="$password" '$1 == e && $3 == p' ./data/player.csv
 then
     echo "Login berhasil."
     ./scripts/manager.sh
-`
-jika user mengisi email dan password yang sesuai dengan database (`./data/player.csv`), maka user akan dibawa ke `./scripts/manager.sh` <br>
+```
+Jika user mengisi email dan password yang sesuai dengan database (`./data/player.csv`), maka user akan dibawa ke `./scripts/manager.sh` <br>
 
-### 1b Membuat manager.sh
+### 1.2 Membuat core_monitor.sh
+```
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}')
+cpu_model=$(lscpu | grep "Model name" | cut -d ':' -f 2 | xargs)
+timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+echo "[$timestamp] - Core Usage [$cpu_usage%] - Terminal Model [$cpu_model]" >> ./logs/core.log
+```
+`top -bn1` menjalankan perintah top dalam mode batch  hanya satu kali `n1`. <br>
+`sed "s/.*, *\([0-9.]*\)%* id.*/\1/"` mengambil angka idle CPU (CPU yang tidak terpakai). <br>
+`awk '{print 100 - $1}'` menghitung persentase CPU yang digunakan <br>
+
+`lscpu` menampilkan informasi CPU. <br>
+`cut -d ':' -f 2` memisahkan teks berdasarkan : dan mengambil nama model CPU. <br>
+`xargs` menghapus spasi berlebih di awal dan akhir teks. <br>
+Contoh Output: <br>
+[2025-03-15 15:14:37] - Core Usage [0.6%] - Terminal Model [AMD Ryzen 9 8945HS w/ Radeon 780M Graphics] <br>
+`>> ./logs/core.log` menyimpan teks dalam file core.log<br>
+
+### 1.3 Membuat frag_monitor.sh
+
+```
+ram_usage=$(free | grep Mem | awk '{print $3/$2 * 100.0}')
+ram_total=$(free -m | grep Mem | awk '{print $2}')
+ram_used=$(free -m | grep Mem | awk '{print $3}')
+ram_available=$(free -m | grep Mem | awk '{print $7}')
+timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
+echo "[$timestamp] - Fragment Usage [$ram_usage%] - Fragment Count [$ram_used MB] - Details [Total: $ram_total MB, Available: $ram_available MB]" >> ./logs/fragment.log
+```
+`$2`  Total RAM.
+`$3` RAM yang sedang digunakan.
+
+### 1.4 Membuat manager.sh
 
 ```
 while true; do
@@ -275,6 +309,7 @@ while true; do
     esac
 done
 ```
+
 
 # soal no 3
 ### 3.1 Speak To Me
