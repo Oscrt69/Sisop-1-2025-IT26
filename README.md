@@ -348,14 +348,16 @@ speak_to_me() {
     echo "Playing: Speak to Me 🎵"
     while true; do
         affirmation=$(curl -s https://www.affirmations.dev | awk -F'"' '{print $4}')
-        echo "$affirmation"
+	color=$((31 + RANDOM % 7))
+        echo -e "\033[${color}m$affirmation\033[0m"
         sleep 1
     done
+}
    ```
-Kode diatas memulai loop untuk `(while true)` agar script terus berjalan. Sedangkan `curl -s` mengambil words of affirmation dari situs https://www.affirmations.dev. Untuk `awk -F'"' '{print $4}'` digunakan mengekstrak teks affirmation dari JSON yang diterima. `echo "$affirmation"` digunakan untuk mencetak kata-kata motivasi ke layar dan `sleep 1` digunakan untuk memberikan rentang waktu 1 detik.
+Kode diatas memulai loop untuk `(while true)` agar script terus berjalan. Sedangkan `curl -s` mengambil words of affirmation dari situs https://www.affirmations.dev. Selanjutnya `color=$((31 + RANDOM % 7))` akan menampilkan text dengan pemilihan 7 warna random. Untuk `awk -F'"' '{print $4}'` digunakan mengekstrak teks affirmation dari JSON yang diterima. `echo "$affirmation"` digunakan untuk mencetak kata-kata motivasi ke layar dan `sleep 1` digunakan untuk memberikan rentang waktu 1 detik.
 
 ### Output Speak to Me
-![Speak to Me](https://github.com/user-attachments/assets/27c23c56-0904-43ad-bb68-43caea7053ba)
+![image](https://github.com/user-attachments/assets/bff2e177-bf09-442f-b98e-8baefa4585cd)
 
 ### 3.2 On The Run
 ```
@@ -398,21 +400,24 @@ Perintah `date +"⌚ %Y-%m-%d %H:%M:%S"` akan menampilkan waktu dengan format Ye
 brain_damage() {
     while true; do
         clear
-        echo -e "\e[38;5;214m$(date +'%H:%M:%S') | Load Average: $(cat /proc/loadavg | awk '{print $1, $2, $3}')\e[0m"
-        echo -e "\e[1;36mPID     USER       PR   NI   %CPU  %MEM     VSZ    RSS   STAT   START     TIME     COMMAND\e[0m"
+               echo -e "\e[38;5;214m$(date +'%H:%M:%S') | Load Average: $(cat /proc/loadavg | awk '{print $1, $2, $3}')\e[0m"
+               echo -e "\e[1;36mPID     USER       PR   NI   %CPU  %MEM     VSZ    RSS   STAT   START          TIME     COMMAND\e[0m"
         ps -eo pid,user,pri,nice,%cpu,%mem,vsz,rss,stat,lstart,time,cmd --sort=-%cpu --width 300 | head -n 15 | awk '
         NR>1 {
-            printf "\033[38;5;202m%-7s\033[0m \033[38;5;45m%-10s\033[0m \033[38;5;33m%-4s\033[0m \033[38;5;226m%-4s\033[0m \033[38;5;196m%-5s\033[0m \033[38;5;46m%-5s\033[0m \033[38;5;220m%-7s\033[0m \033[38;5;81m%-6s\033[0m \033[38;5;227m%-6s\033[0m \033[38;5;129m%-11s\033[0m \033[38;5;208m%-8s\033[0m \033[38;5;33m%s\033[0m\n",
-            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10" "$11" "$12" "$13, $14, $15
+            cmd = ""
+            for (i=12; i<=NF; i++) cmd = cmd $i " "  
+            printf "\033[38;5;202m%-7s\033[0m \033[38;5;45m%-10s\033[0m \033[38;5;33m%-4s\033[0m \033[38;5;226m%-4s\033[0m \033[38;5;196m%-5s\033[0m \033[38;5;46m%-5s\033[0m \033[38;5;220m%-7s\033[0m \033[38;5;81m%-6s\033[0m \033[38;5;227m%-6s\033[0m \033[38;5;129m%-14s\033[0m \033[38;5;208m%-8s\033[0m \033[38;5;33m%s\033[0m\n",
+            $1, $2, $3, $4, $5, $6, $7, $8, $9, $10" "$11, $12, cmd
         }'
 
         sleep 1
     done
+}
 ```
 `echo -e "\e[38;5;214m$(date +'%H:%M:%S') | Load Average: $(cat /proc/loadavg | awk '{print $1, $2, $3}')\e[0m""` akan menampilkan waktu jam digital berwarna coklat dan beban CPU dalam 1, 5, 15 menit terakhir. Selanjutnya `echo -e "\e[1;36mPID     USER       PR   NI   %CPU  %MEM     VSZ    RSS   STAT   START     TIME     COMMAND\e[0m"` berfungsi untuk mencetak header dari sebuah tabel dengan warna cyan yang menampilkan list task manager yang dibutuhkan. `ps -eo pid,user,pri,nice,%cpu,%mem,vsz,rss,stat,lstart,time,cmd --sort=-%cpu --width 300 | head -n 15` akan menampilkan daftar proses pada setiap kolomnya dengan `--sort=-%cpu` mengurutkan berdasar CPU tertinggi dan `head -n 15` agar menampilkan 15 proses teratas. Selanjutnya command printf berfungsi memformat output dengan warna yang berbeda agar lebih mudah dibaca. `sleep 1` digunakan untuk memberikan jeda 1 detik sebelum mencetak ulang proses.
 
 ### Output Brain Damage
-![image](https://github.com/user-attachments/assets/4f94d8c6-417c-4d42-9f37-7181472c3c34)
+![image](https://github.com/user-attachments/assets/1a33870a-fe70-41ac-87c6-2f565f0da91c)
 
 ### 3.5 Money
 ```
