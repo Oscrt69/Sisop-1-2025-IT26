@@ -75,7 +75,8 @@ Secara keseluruhan, kode ini menggunakan if-else sesuai peraturan yang diberikan
 Menunjukkan bahwa dari file csv tersebut akan dicari di kolom 2 yaitu nama penyanyi yang setiap tabelnya terpisah oleh koma, dan
 `{count++}` akan menambahkan count setiap kali ditemukan nama "Chris Hemsworth" pada kolom ke-2.
 ### Output 1a.
-![hasil](https://github.com/user-attachments/assets/2ed0e40f-2ef7-46f4-aa99-607fc08a6076)
+![hasil](https://github.com/user-attachments/assets/11280e08-4a97-4a40-9221-f8c26a6d7807)
+
 ### 1b
 `while IFS=',' read -r _ _ _ _ _ duration _ device _; do` <br>
 `IFS=',':` Internal Field Separator (IFS) sebagai koma (,), sehingga read akan memisahkan setiap kolom berdasarkan koma. <br>
@@ -83,7 +84,7 @@ Menunjukkan bahwa dari file csv tersebut akan dicari di kolom 2 yaitu nama penya
 `avg=$(echo "scale=2; ${durasi[Tablet]} / ${perangkat[Tablet]}"` adalah
 variabel avg berisi pembagian antara jumlah durasi tablet dengan total frekuensi tablet yang muncul.
 ### Output 1b.
-![hasil2](https://github.com/user-attachments/assets/3473c25a-211a-49df-aea2-46ef0b14721b)
+![hasil2](https://github.com/user-attachments/assets/464d2158-2e1c-4fa0-a8d0-d396ac24083b)
 
 ### 1c
 `$(awk -F',' 'NR>1 {if ($7 > max) {max=$7; name=$2; book=$3; rating=$7}}` <br>
@@ -97,7 +98,7 @@ Simpan rating tertinggi di kolom ke-7. <br>
 Akan mengeprint dengan format nama pembaca - judul buku yang dibaca - rating
 
 ### Output 1c.
-![hasil3](https://github.com/user-attachments/assets/58cd98de-64d9-4f25-a3b8-eae3936c3336)
+![hasil3](https://github.com/user-attachments/assets/32ea5bc1-411d-4750-a5ef-79b441f5d6ed)
 
 ### 1d
 
@@ -120,13 +121,13 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
 
 ### Output 1d
 
-![hasil4](https://github.com/user-attachments/assets/4cc96db1-00dd-4f12-aa5b-67c2beb475cb)
+![hasil4](https://github.com/user-attachments/assets/61165a03-05c8-42b0-b484-4a60b7f413d3)
 
 # soal no 2
 
 ### Kerangka Nomor 2
 ![krgkg](https://github.com/user-attachments/assets/3da30948-9d44-4194-a670-b9d27858d036) <br>
-Ini adalah strktur file dan directory untuk nomor 2 sesuai dengan aturan yang ada. Tulisan berwarna biru menandakan direktori, tulisan berwarna putih menandakan file yang belum diubah permissionnya, tulisan berwarna hijau menandakan file yang sudah diubah permissionnya dengan cara `chmod +x (nama_file).sh`
+Ini adalah struktur file dan directory untuk nomor 2 sesuai dengan aturan yang ada. Tulisan berwarna biru menandakan direktori, tulisan berwarna putih menandakan file yang belum diubah permissionnya, tulisan berwarna hijau menandakan file yang sudah diubah permissionnya dengan cara `chmod +x (nama_file).sh`
 
 ### 1.1 Register.sh dan login.sh
 Membuat register.sh 
@@ -227,8 +228,7 @@ then
 ```
 Jika user mengisi email dan password yang sesuai dengan database (`./data/player.csv`), maka user akan dibawa ke `./scripts/manager.sh` <br>
 Berikut adalah tampilan database ketika dibuka <br>
-![db](https://github.com/user-attachments/assets/be70323d-4b50-4fca-8b64-f39118bd4868)
-
+![db](https://github.com/user-attachments/assets/b6e43dd8-d2d8-4fff-9b3a-163bcf390ba9)
 
 ### 1.2 Core_monitor.sh
 ```
