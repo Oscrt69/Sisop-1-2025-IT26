@@ -73,7 +73,7 @@ brain_damage() {
         ps -eo pid,user,pri,nice,%cpu,%mem,vsz,rss,stat,lstart,time,cmd --sort=-%cpu --width 300 | head -n 15 | awk '
         NR>1 {
             cmd = ""
-            for (i=12; i<=NF; i++) cmd = cmd $i " "  # Menggabungkan semua field dari kolom COMMAND
+            for (i=12; i<=NF; i++) cmd = cmd $i " " 
             printf "\033[38;5;202m%-7s\033[0m \033[38;5;45m%-10s\033[0m \033[38;5;33m%-4s\033[0m \033[38;5;226m%-4s\033[0m \033[38;5;196m%-5s\033[0m \033[38;5;46m%-5s\033[0m \033[38;5;220m%-7s\033[0m \033[38;5;81m%-6s\033[0m \033[38;5;227m%-6s\033[0m \033[38;5;129m%-14s\033[0m \033[38;5;208m%-8s\033[0m \033[38;5;33m%s\033[0m\n",
             $1, $2, $3, $4, $5, $6, $7, $8, $9, $10" "$11, $12, cmd
         }'
