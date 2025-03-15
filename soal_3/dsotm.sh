@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Membersihkan terminal sebelum menjalankan program
 clear
 
 # Fungsi Speak to Me: Menampilkan word of affirmation setiap detik
