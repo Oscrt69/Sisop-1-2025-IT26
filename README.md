@@ -257,8 +257,10 @@ timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
 echo "[$timestamp] - Fragment Usage [$ram_usage%] - Fragment Count [$ram_used MB] - Details [Total: $ram_total MB, Available: $ram_available MB]" >> ./logs/fragment.log
 ```
+`grep Mem` Mencari informasi RAM
 `$2`  Total RAM.
 `$3` RAM yang sedang digunakan.
+`$7` Mengambil jumlah RAM yang tersedia.
 
 ### 1.4 Membuat manager.sh
 
