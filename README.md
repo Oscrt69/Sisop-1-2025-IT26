@@ -112,7 +112,7 @@ Operasi berjalan jika pada kolom Read_Date lebih dari 31 Desember 2023. <br>
 Jika genre_count[$genre] belum ada, maka dianggap bernilai nol (0) untuk menghindari error. <br>
 
 `for i  in "${!genre_count[@]}"; do` 
-Mengambil semua key (nama genre) dalam array asosiatif genre_count. Loop ini akan mengecek semua genre yang ada. <br>
+Mengambil semua key (nama genre) dalam array asosiatif genre_count. Loop ini akan memeriksa semua genre yang ada. <br>
 
 `if (( genre_count[$i] > num ))
     num=${genre_count[$i]}`
