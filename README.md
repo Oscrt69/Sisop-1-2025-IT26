@@ -79,7 +79,7 @@ Pada line ini, `awk -F',' '$2` menunjukkan jika dari file csv tersebut akan dica
 ### 1.5 `avg=$(echo "scale=2; ${durasi[Tablet]} / ${perangkat[Tablet]}"`
 variabel avg berisi pembagian antara jumlah durasi tablet dengan total frekuensi tablet yang muncul.
 ### 1.6 Output 1a.
-(![hasil])(https://github.com/user-attachments/assets/0aab1497-a800-43fa-b8d0-5e3d17b8800e)
+![hasil](https://github.com/user-attachments/assets/2ed0e40f-2ef7-46f4-aa99-607fc08a6076)
 # soal no 2
 
 # soal no 3
