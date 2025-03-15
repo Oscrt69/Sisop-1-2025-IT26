@@ -144,11 +144,16 @@ Kode diatas memulai loop untuk `(while true)` agar script terus berjalan. Sedang
 
 
 # soal no 4
-### 4.1 'wget "https://drive.usercontent.google.com/u/0/uc?id=1n-2n_ZOTMleqa8qZ2nB8ALAbGFyN4-LJ&export=download" -O pokemon_usage.csv'
-Command untuk mendownload file csv dengan output nama file pokemon_usage.csv.
+### 4.1 Download file csv
+```
+wget "https://drive.usercontent.google.com/u/0/uc?id=1n-2n_ZOTMleqa8qZ2nB8ALAbGFyN4-LJ&export=download" -O pokemon_usage.csv
+```
+Command di atas akan mendownload file csv dengan output nama file pokemon_usage.csv.
 
-### 4.2 'nano pokemon_analysis.sh'
-Command untuk membuat script pokemon_analysis.sh.
+### 4.2 Membuat script 'pokemon_analysis.sh'
+``` nano pokemon_analysis.sh ```
+Command untuk membuat script pokemon_analysis.sh. Setelah masuk ke editor **nano**, ketik kode berikut ke dalam file:
+```
 #!/bin/bash
 
 data_file="pokemon_usage.csv"
@@ -156,7 +161,15 @@ data_file="pokemon_usage.csv"
 if [ ! -f "$data_file" ]; then
         echo "Error: File $data_file not found."
         exit 1
-fi 
-Kode tersebut adalah kode dasar untuk script pokemon_analysis.sh di dalam editor nano.
+fi
+
+echo "Script pokemon_analysis.sh ready to use."
+```
+Simpan file dengan menekan **CTRL + X**, lalu tekan **Y** dan **Enter** untuk menyimpan perubahan. Beri izin eksekusi agar dapat dijalankan dengan 
+``` chmod +x pokemon_analysis.sh ``` 
+dan jalankan script dengan command 
+``` ./pokemon_analysis.sh ```
+Kode di atas akan mengecek apakah file 'pokemon_usage.csv' ada. Jika file tidak ditemukan, maka akan muncul pesan error dan eksekusi script akan dihentikan. 
+ 
 
 
