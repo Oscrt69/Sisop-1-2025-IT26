@@ -348,7 +348,7 @@ brain_damage() {
 
 ### Output Brain Damage
 ![image](https://github.com/user-attachments/assets/4f94d8c6-417c-4d42-9f37-7181472c3c34)
-
+```
 
 
 # soal no 4
