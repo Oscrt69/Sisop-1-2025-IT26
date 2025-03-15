@@ -129,7 +129,7 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
 ![krgkg](https://github.com/user-attachments/assets/3da30948-9d44-4194-a670-b9d27858d036) <br>
 Ini adalah strktur file dan directory untuk nomor 2 sesuai dengan aturan yang ada. Tulisan berwarna biru menandakan direktori, tulisan berwarna putih menandakan file yang belum diubah permissionnya, tulisan berwarna hijau menandakan file yang sudah diubah permissionnya dengan cara `chmod +x (nama_file).sh`
 
-### 1.1 Membuat register.sh dan login.sh
+### 1.1 Register.sh dan login.sh
 Membuat register.sh 
 
 ```validate_email() {
@@ -228,7 +228,7 @@ then
 ```
 Jika user mengisi email dan password yang sesuai dengan database (`./data/player.csv`), maka user akan dibawa ke `./scripts/manager.sh` <br>
 
-### 1.2 Membuat core_monitor.sh
+### 1.2 Core_monitor.sh
 ```
 cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1}')
 cpu_model=$(lscpu | grep "Model name" | cut -d ':' -f 2 | xargs)
@@ -246,7 +246,7 @@ Contoh Output: <br>
 [2025-03-15 15:14:37] - Core Usage [0.6%] - Terminal Model [AMD Ryzen 9 8945HS w/ Radeon 780M Graphics] <br>
 `>> ./logs/core.log` menyimpan teks dalam file core.log<br>
 
-### 1.3 Membuat frag_monitor.sh
+### 1.3 Frag_monitor.sh
 
 ```
 ram_usage=$(free | grep Mem | awk '{print $3/$2 * 100.0}')
@@ -257,12 +257,13 @@ timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
 echo "[$timestamp] - Fragment Usage [$ram_usage%] - Fragment Count [$ram_used MB] - Details [Total: $ram_total MB, Available: $ram_available MB]" >> ./logs/fragment.log
 ```
+`free -m` Menampilkan informasi RAM dalam megabyte (MB)
 `grep Mem` Mencari informasi RAM
 `$2`  Total RAM.
 `$3` RAM yang sedang digunakan.
 `$7` Mengambil jumlah RAM yang tersedia.
 
-### 1.4 Membuat manager.sh
+### 1.4 Manager.sh
 
 ```
 while true; do
@@ -311,7 +312,7 @@ while true; do
     esac
 done
 ```
-
+###
 
 # soal no 3
 ### 3.1 Speak To Me
