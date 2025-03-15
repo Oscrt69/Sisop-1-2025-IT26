@@ -126,7 +126,8 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
 # soal no 2
 
 # soal no 3
-### 3.1 speak_to_me() {
+### 3.1 Speak To Me
+speak_to_me() {
     echo "Playing: Speak to Me 🎵"
     while true; do
         affirmation=$(curl -s https://www.affirmations.dev | awk -F'"' '{print $4}')
@@ -134,7 +135,7 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
         sleep 1
     done
    
-Kode diatas memulai loop untuk (while true) agar script terus berjalan. Sedangkan curl -s mengambil words of affirmation dari situs https://www.affirmations.dev. Untuk awk -F'"' '{print $4}' digunakan mengekstrak teks affirmation dari JSON yang diterima. echo "$affirmation" digunakan untuk mencetak kata-kata motivasi ke layar dan sleep 1 digunakan untuk memberikan rentang waktu 1 detik.
+Kode diatas memulai loop untuk `(while true)` agar script terus berjalan. Sedangkan `curl -s` mengambil words of affirmation dari situs https://www.affirmations.dev. Untuk `awk -F'"' '{print $4}'` digunakan mengekstrak teks affirmation dari JSON yang diterima. `echo "$affirmation"` digunakan untuk mencetak kata-kata motivasi ke layar dan `sleep 1` digunakan untuk memberikan rentang waktu 1 detik.
 
 
 # soal no 4
