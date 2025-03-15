@@ -300,19 +300,43 @@ while true; do
             elif [ "$log_choice" -eq "2" ]; then
                 cat logs/fragment.log
             else
-                echo "not  valid."
+                echo "Tidak  valid."
             fi
             ;;
         6)
             exit 0
             ;;
         *)
-            echo "Not Valid"
+            echo "Tidak valid"
             ;;
     esac
 done
 ```
-###
+`truncate -s 0` menghapus teks yang tersimpan di log.
+
+### 1.5 terminal.sh
+
+while true; do
+    echo "1. Register"
+    echo "2. Login"
+    echo "3. Exit"
+    read -p "Pilih opsi: " choice
+
+    case $choice in
+        1)
+            ./register.sh
+            ;;
+        2)
+            ./login.sh
+            ;;
+        3)
+            exit 0
+            ;;
+        *)
+            echo "Opsi tidak valid."
+            ;;
+    esac
+done
 
 # soal no 3
 ### 3.1 Speak To Me
