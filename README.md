@@ -4,7 +4,7 @@ Azaria Raissa Maulidinnisa 5027241043 <br />
 Oscaryavat Viryavan 5027241053 <br />
 Naufal Ardhana 5027241118 <br />
 
-## soal no 1
+# soal no 1
 ### 1.1 `wget "https://drive.usercontent.google.com/u/0/uc?id=1l8fsj5LZLwXBlHaqhfJVjz_T0p7EJjqV&export=download" -O reading_data.csv` 
 Command ini untuk mendownload file csv dengan output file bernama reading_data.csv.
 
@@ -120,10 +120,16 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
 
 ### Output 1d
 
-![hasil4](https://github.com/user-attachments/assets/4cc96db1-00dd-4f12-aa5b-67c2beb475cb)
+![hasil4](https://github.com/user-attachments/assets/85eb329d-9608-4959-84e0-fc9a160b1fda)
 
 
 # soal no 2
+
+### 2.1 Struktur
+
+![Uploading krgkg.jpg…]()
+
+
 
 # soal no 3
 ### 3.1 speak_to_me() {
