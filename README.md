@@ -133,7 +133,8 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
         echo "$affirmation"
         sleep 1
     done
-    Kode diatas memulai loop untuk (while true) agar script terus berjalan. Sedangkan curl -s mengambil words of affirmation dari situs https://www.affirmations.dev. Untuk awk -F'"' '{print $4}' digunakan mengekstrak teks affirmation dari JSON yang diterima. echo "$affirmation" digunakan untuk mencetak kata-kata motivasi ke layar dan sleep 1 digunakan untuk memberikan rentang waktu 1 detik.
+   
+Kode diatas memulai loop untuk (while true) agar script terus berjalan. Sedangkan curl -s mengambil words of affirmation dari situs https://www.affirmations.dev. Untuk awk -F'"' '{print $4}' digunakan mengekstrak teks affirmation dari JSON yang diterima. echo "$affirmation" digunakan untuk mencetak kata-kata motivasi ke layar dan sleep 1 digunakan untuk memberikan rentang waktu 1 detik.
 
 
 # soal no 4
