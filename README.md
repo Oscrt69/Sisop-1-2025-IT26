@@ -384,7 +384,7 @@ brain_damage() {
 ### Output Brain Damage
 ![image](https://github.com/user-attachments/assets/4f94d8c6-417c-4d42-9f37-7181472c3c34)
 ```
-
+```
 
 # soal no 4
 ### 4.1 Download file csv
@@ -409,7 +409,7 @@ Simpan file dengan menekan **CTRL + X**, lalu tekan **Y** dan **Enter** untuk me
 ``` chmod +x pokemon_analysis.sh ``` dan jalankan script dengan command ``` ./pokemon_analysis.sh ```.
 Kode di atas akan mengecek apakah file 'pokemon_usage.csv' ada. Jika file tidak ditemukan, maka akan muncul pesan error dan eksekusi script akan dihentikan. 
 
-Output jika script siap:
+### Output jika script siap
 ![script_bener](https://github.com/user-attachments/assets/a17683db-b139-4f5e-9c51-fc304a40c65a)
 
 
@@ -457,7 +457,7 @@ Setelah diurutkan, ```head -n 1``` mengambil data paling atas, kemudian ```cut -
 ```cut -d, -f1``` Mengambil kolom 1 yang berisi nama Pokemon dari sorting 'highest_usage'.
 ```cut -d, -f2``` Mengambil kolom 2 yang berisi angka Usage dari sorting 'highest_usage'. Kode sama untuk Raw Pokemon yang diambil dari sorting 'raw_usage'.
 
-Output untuk 4a:
+### Output untuk --info
 ![terminal_info](https://github.com/user-attachments/assets/547f0a54-8084-4ad2-ac4a-9de6b36208d3)
 
 
