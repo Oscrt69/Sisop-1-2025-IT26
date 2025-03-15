@@ -144,3 +144,19 @@ Kode diatas memulai loop untuk `(while true)` agar script terus berjalan. Sedang
 
 
 # soal no 4
+### 4.1 'wget "https://drive.usercontent.google.com/u/0/uc?id=1n-2n_ZOTMleqa8qZ2nB8ALAbGFyN4-LJ&export=download" -O pokemon_usage.csv'
+Command untuk mendownload file csv dengan output nama file pokemon_usage.csv.
+
+### 4.2 'nano pokemon_analysis.sh'
+Command untuk membuat script pokemon_analysis.sh.
+#!/bin/bash
+
+data_file="pokemon_usage.csv"
+
+if [ ! -f "$data_file" ]; then
+        echo "Error: File $data_file not found."
+        exit 1
+fi 
+Kode tersebut adalah kode dasar untuk script pokemon_analysis.sh di dalam editor nano.
+
+
