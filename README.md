@@ -70,16 +70,18 @@ else
 fi
 ```
 Secara keseluruhan, kode ini menggunakan if-else sesuai peraturan yang diberikan.
-### 1.3 `sumbook=$(awk -F',' '$2 == "Chris Hemsworth" {count++} END {print count}' reading_data.csv)`
+### 1.a `sumbook=$(awk -F',' '$2 == "Chris Hemsworth" {count++} END {print count}' reading_data.csv)`
 Pada line ini, `awk -F',' '$2` menunjukkan jika dari file csv tersebut akan dicari di kolom 2 yaitu penyanyi dengan tiap tabelnya terpisah oleh koma yang kalimatnya terdapat kata "Christ Hemworth", dan
 `{count++}` akan menambahkan count setiap kali ditemukan nama "Chris Hemsworth" pada kolom ke-2.
+### 1.a.1 output 1a.
+![hasil](https://github.com/user-attachments/assets/2ed0e40f-2ef7-46f4-aa99-607fc08a6076)
 ### 1.4 `while IFS=',' read -r _ _ _ _ _ duration _ device _; do`
 `IFS=',':` Internal Field Separator (IFS) sebagai koma (,), sehingga read akan memisahkan setiap kolom berdasarkan koma.
 `read -r _ _ _ _ _ duration _ device _; do` mengabaikan semua kolom kecuali duration dan device.
 ### 1.5 `avg=$(echo "scale=2; ${durasi[Tablet]} / ${perangkat[Tablet]}"`
 variabel avg berisi pembagian antara jumlah durasi tablet dengan total frekuensi tablet yang muncul.
-### 1.6 Output 1a.
-![hasil](https://github.com/user-attachments/assets/2ed0e40f-2ef7-46f4-aa99-607fc08a6076)
+### 1.6 Output 1b.
+
 # soal no 2
 
 # soal no 3
