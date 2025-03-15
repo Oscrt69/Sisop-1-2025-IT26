@@ -128,7 +128,153 @@ Mengecek apakah jumlah buku untuk genre $i lebih besar dari jumlah tertinggi yan
 ### Kerangka Nomor 2
 ![krgkg](https://github.com/user-attachments/assets/3da30948-9d44-4194-a670-b9d27858d036)
 
+### 1a Membuat register.sh dan login.sh
+Membuat register.sh 
 
+```validate_email() {
+    if [[ "$1" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+validate_password() {
+    if [[ "${#1}" -ge 8 && "$1" =~ [A-Z] && "$1" =~ [a-z] && "$1" =~ [0-9] ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+hash() {
+    echo -n "$1SALT" | sha256sum | awk '{print $1}'
+}
+
+read -p "Email: " email
+read -p "Username: " username
+read -sp "Password: " password
+echo
+
+if ! validate_email "$email"
+then
+    echo "Email tidak valid."
+    exit 1
+fi
+
+if ! validate_password "$password"
+then
+    echo "Password tidak valid. Harus memiliki minimal 8 karakter, satu huruf besar, satu huruf kecil, dan satu angka."
+    exit 1
+fi
+
+if grep -q "^$email," ./data/player.csv
+then
+    echo "Email sudah terdaftar."
+    exit 1
+fi
+
+hashed=$(hash "$password")
+echo "$email,$username,$hashed" >> ./data/player.csv
+echo "Registrasi berhasil."
+```
+
+`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]`
+ini adalah format email yang valid, contoh email yang valid : oscar10@gmail.com <br>
+
+`"${#1}" -ge 8 && "$1" =~ [A-Z] && "$1" =~ [a-z] && "$1" =~ [0-9]`
+ini adalah format password yang sesuai aturan dimana setidaknya: <br>
+- Delapan karakter <br>
+- Satu uruf besar <br>
+- Satu huruf kecil <br>
+- Satu angka <br>
+
+
+Membuat login.sh 
+
+```hash() {
+   echo -n "$1SALT" | sha256sum | awk '{print $1}'
+}
+read -p "Email: " email
+read -sp "Password: " password
+echo
+
+hashed=$(hash "$password")
+if awk -F',' -v e="$email" -v p="$password" '$1 == e && $3 == p' ./data/player.csv
+then
+    echo "Login berhasil."
+    ./scripts/manager.sh
+
+else
+    echo "Email atau password salah."
+    exit 1
+fi
+
+```
+    echo -n "$1SALT" | sha256sum | awk '{print $1}'
+```
+password di hash dengan algoritma SHA 256
+`$1` merupakan parameter pertama yang dikirim ke fungsi hash().
+`SALT` adalah String tambahan (garam) yang digabungkan dengan input untuk meningkatkan keamanan hash. <br>
+
+`if awk -F',' -v e="$email" -v p="$password" '$1 == e && $3 == p' ./data/player.csv
+then
+    echo "Login berhasil."
+    ./scripts/manager.sh
+`
+jika user mengisi email dan password yang sesuai dengan database (`./data/player.csv`), maka user akan dibawa ke `./scripts/manager.sh` <br>
+
+### 1b Membuat manager.sh
+
+```
+while true; do
+    echo "1. Add CPU - Core Monitor to Crontab"
+    echo "2. Add RAM Fragment Monitor to Crontab"
+    echo "3. Remove CPU - Core Monitor from Crontab"
+    echo "4. Remove RAM Fragment Monitor from Crontab"
+    echo "5. View All Scheduled Monitoring Jobs"
+    echo "6. Exit"
+    read -p "Pilih opsi: " choice
+
+    case $choice in
+        1)
+            ./scripts/core_monitor.sh
+            ;;
+        2)
+            ./scripts/frag_monitor.sh
+            ;;
+        3)
+            truncate -s 0 ./logs/core.log
+            echo "CPU removed"
+            ;;
+        4)
+            truncate -s ./logs/fragment.log
+            echo "RAM removed"
+            ;;
+        5)
+            echo "1. Core Monitor (core.log)"
+            echo "2. Fragment Monitor (fragment.log)"
+            read -p "Pilih opsi: " log_choice
+
+            if [ "$log_choice" -eq "1" ]; then
+                cat logs/core.log
+            elif [ "$log_choice" -eq "2" ]; then
+                cat logs/fragment.log
+            else
+                echo "not  valid."
+            fi
+            ;;
+        6)
+            exit 0
+            ;;
+        *)
+            echo "Not Valid"
+            ;;
+    esac
+done
+```
 
 # soal no 3
 ### 3.1 Speak To Me
