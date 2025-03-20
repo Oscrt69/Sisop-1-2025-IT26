@@ -100,33 +100,54 @@ declare -A COLUMNS=(
 	["speed"]=11
 )
 
-# grep or filter pokemon
-if [ "$option" = "--grep" ] || [ "$option" = "--filter" ]; then
+# grep pokemon
+if [ "$option" = "--grep" ]; then
         if [ -z "$value" ]; then
                 echo "Error: no search keyword provided."
                 echo "Use -h or --help for more information."
                 exit 1
         fi
 
-        head -n 1 "$file"
-        tail -n +2 "$file" | grep -i -w "$value" | sort -t, -k2 -n -r
+        head -n 1 "$data_file"
+        tail -n +2 "$file" | awk -F, -v name="$3" 'BEGIN {IGNORECASE=1} $1 == name' | sort -t, -k2 -nr
+        exit 0
+fi
+
+#filter pokemon
+if [ "$option" = "--filter" ]; then
+        if [ -z "$value" ]; then
+                echo "Error: no search keyword provided."
+                echo "Use -h or --help for more information."
+                exit 1
+        fi
+
+        result=$(tail -n +2 "$data_file" | awk -F, -v type="$3" 'BEGIN {IGNORECASE=1} NR > 1 && ($4 == type || $5 == type)')
+        if [ -z "$result" ]; then
+                echo "Error: no Pokemon found with type '$3'."
+                exit 1
+        fi
+
+        head -n 1 "$data_file"
+        echo "$result" | sort -t, -k2 -nr
         exit 0
 fi
 
 # sorting pokemon
-if [ -z "${COLUMNS[$value]}" ]; then
-        echo "Error: Invalid sort method '$value'."
-        echo "Use -h or --help for more information."
-        exit 1
-fi
+if [ "$option" = "--sort" ]; then
+	if [ -z "${COLUMNS[$value]}" ]; then
+        	echo "Error: Invalid sort method '$value'."
+        	echo "Use -h or --help for more information."
+        	exit 1
+	fi
 
-head -n 1 "$file"
+	head -n 1 "$file"
 
-if [ "$value" == "name" ]; then
-        tail -n +2 "$file" | sort -t, -k${COLUMNS[$value]}
-else
-        tail -n +2 "$file" | sort -t, -k${COLUMNS[$value]} -n -r
-        exit 0
-fi
+	if [ "$value" == "name" ]; then
+        	tail -n +2 "$file" | sort -t, -k${COLUMNS[$value]}
+	else
+        	tail -n +2 "$file" | sort -t, -k${COLUMNS[$value]} -n -r
+        	exit 0
+	fi
+ fi
 
 
