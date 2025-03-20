@@ -592,7 +592,7 @@ fi
 ### Output untuk --grep (name)
 ![grep term bener](https://github.com/user-attachments/assets/f8d75374-e8db-4e70-bddf-402adf712e52)
 
-### Revisi 4c. Mencari nama pokemon tertentu
+### REVISI 4c. Mencari nama pokemon tertentu
 ```
 if [ "$option" = "--grep" ]; then
         if [ -z "$value" ]; then
@@ -609,7 +609,7 @@ fi
 ```awk -F, -v name="$3" 'BEGIN {IGNORECASE=1} $1 == name'``` digunakan untuk mencari hanya di kolom pertama yang menyimpan nama pokemon. 
 ```-F,``` pemisah dalam file menggunakan koma. ```-v name="$3"``` untuk mengambil argumen yang dimasukkan user. ```'BEGIN {IGNORECASE=1} $1 == name'``` untuk mencocokkan hanya dengan kolom pertama tanpa memperhatikan huruf besar atau kecil.
 
-Output baru 4c.
+### Output revisi 4c.
 ![revisi grep](https://github.com/user-attachments/assets/09d11eb7-43fd-4fce-84e8-224f92e27b02)
 
 ### 4d. Mencari Pokemon berdasarkan filter nama type
@@ -617,7 +617,7 @@ Kode untuk filter sama dengan kode grep di atas.
 ### Output untuk --filter (type)
 ![filter term bener](https://github.com/user-attachments/assets/92670edc-29e1-4b8b-81ce-d86e785ee36b)
 
-### Revisi 4d. Mencari Pokemon berdasarkan filter nama type
+### REVISI 4d. Mencari Pokemon berdasarkan filter nama type
 ```
 if [ "$option" = "--filter" ]; then
         if [ -z "$value" ]; then
@@ -640,7 +640,7 @@ fi
 ```awk -F, -v type="$3" 'BEGIN {IGNORECASE=1} NR > 1 && ($4 == type || $5 == type)``` digunakan hanya untuk mencari hanya di kolom 4 dan 5 yang menyimpan type pokemon. 
 ```NR > 1``` untuk mengabaikan header saat filter. ```($4 == type || $5 == type)``` hanya mencari di kolom 4 dan 5 yang berisi type pokemon. 
 
-### Output baru 4d. 
+### Output revisi 4d. 
 ![revisi filter](https://github.com/user-attachments/assets/8ff2214e-baab-4593-bece-beda80cd0607)
 Tidak dapat menampilkan ''weavile'' karena bukan type pokemon.
 
