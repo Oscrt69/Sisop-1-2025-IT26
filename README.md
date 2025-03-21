@@ -930,7 +930,7 @@ while true; do
 done
 ```
 
-##NO 4
+## NO 4
 ### 4c. Mencari nama pokemon tertentu
 ```
 if [ "$option" = "--grep" ]; then
