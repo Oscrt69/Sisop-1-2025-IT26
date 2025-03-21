@@ -708,7 +708,7 @@ fi
 
 # REVISI
 
- ### NO 1
+ ## NO 1
 ```
 echo "Pilih tugas yang ingin dijalankan:"
 echo "1. Menghitung jumlah buku yang dibaca oleh Chris Hemsworth"
@@ -740,5 +740,213 @@ else
     echo "Pilihan tidak valid"
 fi
 ```
+## NO 2
+
+### register.sh
+
+```
+validate_email() {
+    if [[ "$1" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+validate_password() {
+    if [[ "${#1}" -ge 8 && "$1" =~ [A-Z] && "$1" =~ [a-z] && "$1" =~ [0-9] ]]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+hash() {
+    echo -n "$1SALT" | sha256sum | awk '{print $1}'
+}
+
+read -p "Email: " email
+read -p "Username: " username
+read -sp "Password: " password
+echo
+
+if ! validate_email "$email"
+then
+    echo "Email tidak valid."
+    exit 1
+fi
+
+if ! validate_password "$password"
+then
+    echo "Password tidak valid. Harus memiliki minimal 8 karakter, satu huruf besar, >    exit 1
+fi
+
+if grep -q "^$email," ./data/player.csv
+then
+    echo "Email sudah terdaftar."
+    exit 1
+fi
+
+hashed=$(hash "$password")
+echo "$email,$username,$hashed" >> ./data/player.csv
+echo "Registrasi berhasil."
+```
+
+### login.sh
+
+```
+hash() {
+    echo -n "$1SALT" | sha256sum | awk '{print $1}'
+}
+read -p "Email: " email
+read -sp "Password: " password
+echo
+
+hashed=$(hash "$password")
+if awk -F',' -v e="$email" -v p="$password" '$1 == e && $3 == p' ./data/player.csv
+then
+    echo "Login berhasil."
+    ./scripts/manager.sh
+
+else
+    echo "Email atau password salah."
+    exit 1
+fi
+```
+
+### manager.sh
+
+```
+function CPU {
+  if crontab -l | grep -q "core_monitor.sh"; then
+    echo -e "Cpu is already monitored"
+    return 1
+  fi
+  local script="$(pwd)/scripts/core_monitor.sh"
+  local schedule='* * * * *'
+  (crontab -l; echo "$schedule $script") | crontab - 2>/dev/null
+
+  echo -e "Added Successfully"
+}
 
 
+function RAM {
+  if crontab -l | grep -q "frag_monitor.sh"; then
+    echo -e "Ram is already monitored"
+    return 1
+  fi
+  local script="$(pwd)/scripts/frag_monitor.sh"
+  local schedule='* * * * *'
+  (crontab -l; echo "$schedule $script") | crontab - 2>/dev/null
+
+  echo -e "Added Successfully"
+}
+
+function removeCPU {
+  if ! crontab -l | grep -q "core_monitor.sh"; then
+    echo -e "Cpu is not monitored yet"
+    return 1
+  fi
+  crontab -l | grep -v "core_monitor.sh" | crontab -
+
+  echo -e "Removed Successfully"
+}
+
+function removeRAM {
+  if ! crontab -l | grep -q "frag_monitor.sh"; then
+    echo -e "Ram is not monitored yet"
+    return 1
+  fi
+  crontab -l | grep -v "frag_monitor.sh" | crontab -
+
+  echo -e "Removed Successfully"
+}
+
+function viewCrontab {
+  if [ -z "$(crontab -l)" ]; then
+    echo "No scheduled monitoring jobs"
+  else
+    crontab -l
+  fi
+}
+
+# Menu utama
+while true; do
+  username=$(echo $SESSION | cut -d ',' -f2)
+  echo "1. Add CPU - Core Monitor to Crontab"
+  echo "2. Add RAM Fragment Monitor to Crontab"
+  echo "3. Remove CPU - Core Monitor from Crontab"
+  echo "4. Remove RAM Fragment Monitor from Crontab"
+  echo "5. View All Scheduled Monitoring Jobs"
+  echo "6. Exit"
+  read -p "Choose an option: " choice
+
+  case $choice in
+    1) CPU ;;
+    2) RAM ;;
+    3) removeCPU ;;
+    4) removeRAM ;;
+    5) viewCrontab ;;
+    6) exit 0 ;;
+    *) echo -e "Invalid!" ;;
+  esac
+done
+```
+
+### core_monitor.sh
+
+```
+DIR_PATH=$(realpath $(dirname $0))
+LOG_DIR=$(realpath "$DIR_PATH/../logs")
+
+if [ ! -d "$LOG_DIR" ]; then
+    mkdir -p "$LOG_DIR"
+fi
+
+CPU_Load=$(top -bn2 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}' | awk 'NR==2 {print $0}' )
+CPU_Type=$(lscpu | grep 'Model name' | awk -F': ' '{print $2}' | xargs)
+
+echo "[$(date +'%Y-%m-%d %H:%M:%S')] - Core Usage [$CPU_Load] - Terminal Model [$CPU_Type]" >> "$LOG_DIR/core.log"
+```
+
+### frag_monitor.sh
+
+```
+DIR_PATH=$(realpath $(dirname $0))
+LOG_DIR=$(realpath "$DIR_PATH/../logs")
+
+if [ ! -d "$LOG_DIR" ]; then
+    mkdir -p "$LOG_DIR"
+fi
+
+echo "[$(date "+%Y-%m-%d %H:%M:%S")] - Fragment Usage [$(awk '/MemFree/ {free=$2} /MemTotal/ {total=$2} END {print (1 - free/total) * 100}' /proc/meminfo)%] - Fragment Count [$(awk '/SReclaimable/ {print $2/1024}' /proc/meminfo) MB] - Details [Total: $(free -m | awk '/Mem:/ {print $2}') MB, Available: $(free -m | awk '/Mem:/ {print $7}') MB]" >> "$LOG_DIR/fragment.log"
+
+```
+
+### terminal.sh
+
+```
+while true; do
+    echo "1. Register"
+    echo "2. Login"
+    echo "3. Exit"
+    read -p "Pilih opsi: " choice
+
+    case $choice in
+        1)
+            ./register.sh
+            ;;
+        2)
+            ./login.sh
+            ;;
+        3)
+            exit 0
+            ;;
+        *)
+            echo "Opsi tidak valid."
+            ;;
+    esac
+done
+```
